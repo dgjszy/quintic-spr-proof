@@ -8,13 +8,17 @@ A Lean 4 / mathlib proof of robust strictly positive-real synthesis for real mon
 
 Let
 
-$$K=\{s^5+a_1s^4+a_2s^3+a_3s^2+a_4s+a_5:\ a_k\in[l_k,u_k]\},$$
+$$
+K=\{s^5+a_1s^4+a_2s^3+a_3s^2+a_4s+a_5:\ a_k\in[l_k,u_k]\},
+$$
 
 where the endpoints are finite real numbers and $l_k\le u_k$; degenerate intervals are allowed.
 If every polynomial in $K$ is strictly Hurwitz, there exists **one fixed real polynomial $b$ of exact degree five** such that
 
-$$\operatorname{Re}\!\left(\frac{b(i\omega)}{a(i\omega)}\right)>0
-\qquad\text{for every }a\in K\text{ and every }\omega\in\mathbb R.$$
+$$
+\mathrm{Re}\left(\frac{b(i\omega)}{a(i\omega)}\right)>0
+\qquad\text{for every }a\in K\text{ and every }\omega\in\mathbb R.
+$$
 
 The numerator may depend on the interval endpoints, but is independent of the denominator and frequency.
 The theorem is an existence proof, not a numerical synthesis algorithm.
