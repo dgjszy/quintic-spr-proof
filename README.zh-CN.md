@@ -9,7 +9,7 @@
 考虑 5 个彼此独立的有限闭系数区间，允许退化区间。假设**区间箱内每个分母均严格 Hurwitz 稳定**（所有根的实部为负），则存在**同一个实际次数恰为 5 的实系数分子**，使得
 
 $$
-\operatorname{Re}\left(\frac{b(i\omega)}{a(i\omega)}\right)>0
+\mathrm{Re}\left(\frac{b(i\omega)}{a(i\omega)}\right)>0
 \quad\text{对箱内每个分母 }a\text{ 以及每个 }\omega\in\mathbb R.
 $$
 
