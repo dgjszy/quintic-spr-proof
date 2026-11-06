@@ -9,7 +9,7 @@ A standalone Lean 4 / mathlib formalization of robust strictly positive-real (SP
 For 5 independent finite closed coefficient intervals, including degenerate intervals, assume that **every denominator in the interval box is strictly Hurwitz** (all roots have negative real part). There exists **one fixed real numerator of exact degree 5** such that
 
 $$
-\operatorname{Re}\left(\frac{b(i\omega)}{a(i\omega)}\right)>0
+\mathrm{Re}\left(\frac{b(i\omega)}{a(i\omega)}\right)>0
 \quad\text{for every denominator }a\text{ in the box and every }\omega\in\mathbb R.
 $$
 
