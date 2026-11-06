@@ -1,48 +1,48 @@
 # Quintic SPR Proof
 
-A Lean 4 / mathlib proof of robust strictly positive-real synthesis for real monic quintic interval polynomials.
+[简体中文](README.zh-CN.md)
 
-五阶区间多项式族鲁棒严格正实综合的完整 Lean 形式化证明。
+A standalone Lean 4 / mathlib formalization of robust strictly positive-real (SPR) synthesis for real monic quintic interval polynomials.
 
-## The theorem
+## What this repository proves
 
-Let
-
-$$
-K=\{s^5+a_1s^4+a_2s^3+a_3s^2+a_4s+a_5:\ a_k\in[l_k,u_k]\},
-$$
-
-where the endpoints are finite real numbers and $l_k\le u_k$; degenerate intervals are allowed.
-If every polynomial in $K$ is strictly Hurwitz, there exists **one fixed real polynomial $b$ of exact degree five** such that
+For 5 independent finite closed coefficient intervals, including degenerate intervals, assume that **every denominator in the interval box is strictly Hurwitz** (all roots have negative real part). There exists **one fixed real numerator of exact degree 5** such that
 
 $$
-\mathrm{Re}\left(\frac{b(i\omega)}{a(i\omega)}\right)>0
-\qquad\text{for every }a\in K\text{ and every }\omega\in\mathbb R.
+\operatorname{Re}\left(\frac{b(i\omega)}{a(i\omega)}\right)>0
+\quad\text{for every denominator }a\text{ in the box and every }\omega\in\mathbb R.
 $$
 
-The numerator may depend on the interval endpoints, but is independent of the denominator and frequency.
-The theorem is an existence proof, not a numerical synthesis algorithm.
+The same numerator works for the entire box and all real frequencies, including zero. This is an existence theorem, not a numerical synthesis algorithm or a theorem for arbitrary orders.
 
-- Formal statement: [`RobustSPRStatement`](Lean/SPR/N5/Definitions/Frequency.lean).
-- Main theorem: [`SPR.N5.Direct.robustSPR`](Lean/Main.lean).
-- Proof guide: [module map](Lean/SPR/N5/README.md) and [proof outline](docs/PROOF.md).
-- Trust boundary and build checks: [verification](docs/VERIFICATION.md).
+- Public theorem: [`SPR.N5.Direct.robustSPR`](Lean/Main.lean).
+- Exact definitions: [`Lean/SPR/N5/Definitions/Frequency.lean`](Lean/SPR/N5/Definitions/Frequency.lean).
+- [Module guide](Lean/SPR/N5/README.md) · [Proof outline](docs/PROOF.md) · [Verification notes](docs/VERIFICATION.md).
 
-## Build
+## Setup and build
 
-Install Lean's `elan` toolchain manager, then run from the repository root:
+Install Git and [elan](https://github.com/leanprover/elan), the Lean toolchain manager, and make sure `elan`, `lean`, and `lake` are on your PATH. The commands below work in a macOS, Linux, or Windows WSL shell and run from the repository root.
 
 ```sh
+git clone https://github.com/dgjszy/quintic-spr-proof.git
+cd quintic-spr-proof
 lake exe cache get
 lake build
+```
+
+`lean-toolchain` pins Lean **4.30.0**; mathlib is pinned to **v4.30.0**, with exact dependency commits in `lake-manifest.json`. The first run needs internet access to download the toolchain, dependencies, and compiled cache. Keep the lockfile; a normal build does not require `lake update`. The cache speeds up dependency builds; Lean checks the project proof sources.
+
+This repository is used as a local proof library. No server or database deployment is needed. The formal build requires neither Python nor an external solver.
+
+## Verify and use
+
+```sh
 lake env lean Lean/Audit.lean
 ```
 
-`lean-toolchain` pins Lean **4.30.0**. Mathlib is pinned to **v4.30.0** and its exact dependency commits are recorded in `lake-manifest.json`.
-The cache command downloads compiled dependencies; the project proof sources are checked by Lean.
-No Python, external solver, or generated proof source is required.
+The default build includes a transitive axiom audit that permits only `propext`, `Classical.choice`, and `Quot.sound`; any other axiom causes an error.
 
-To use the theorem:
+Within this project's Lean environment:
 
 ```lean
 import SPR
@@ -51,15 +51,9 @@ import SPR
 #print axioms SPR.N5.Direct.robustSPR
 ```
 
-The default build includes a transitive axiom audit of every theorem in the `SPR` namespace.
-Only `propext`, `Classical.choice`, and `Quot.sound` are allowed.
+## Repository layout
 
-## Contents
-
-- `Lean/Main.lean`: the actual public theorem and final proof assembly.
-- `Lean/SPR.lean`: public import entry.
-- `Lean/Audit.lean`: build-time axiom audit.
-- `Lean/SPR/N5/`: definitions and the complete quintic proof.
-- `docs/`: proof and verification notes.
-
-This standalone repository contains the quintic proof only. It makes no claim about a general higher-order theorem.
+- [`Lean/Main.lean`](Lean/Main.lean): public theorem and final proof assembly.
+- [`Lean/SPR.lean`](Lean/SPR.lean): public import entry.
+- [`Lean/SPR/N5/`](Lean/SPR/N5/): definitions and quintic proof modules.
+- [`Lean/Audit.lean`](Lean/Audit.lean): axiom audit.
